@@ -187,3 +187,12 @@ Vamos utilizar Pyenv + Poetry, link de como preparar o ambiente abaixo:
 [mongo-motor](https://motor.readthedocs.io/en/stable/)
 
 [pytest](https://docs.pytest.org/en/7.4.x/)
+
+
+# Refatoração dos tesstes
+
+## Melhorias Gerais
+Anotações de Tipo: Adicionar anotações de tipo para maior clareza.
+Docstrings: Adicionar docstrings para descrever o propósito de cada teste e fixture.
+Verificação Completa: Assegurar que todos os campos esperados sejam verificados nos testes.
+Uso de Valores Numéricos: Garantir que valores como preços sejam numéricos (floats) ao invés de strings.

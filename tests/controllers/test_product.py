@@ -6,6 +6,9 @@ from fastapi import status
 
 
 async def test_controller_create_should_return_success(client, products_url):
+    """
+    Testa se a criação de um produto retorna sucesso.
+    """
     response = await client.post(products_url, json=product_data())
 
     content = response.json()
@@ -18,7 +21,7 @@ async def test_controller_create_should_return_success(client, products_url):
     assert content == {
         "name": "Iphone 14 Pro Max",
         "quantity": 10,
-        "price": "8.500",
+        "price": 8500.0,
         "status": True,
     }
 
@@ -26,6 +29,9 @@ async def test_controller_create_should_return_success(client, products_url):
 async def test_controller_get_should_return_success(
     client, products_url, product_inserted
 ):
+    """
+    Testa se a obtenção de um produto pelo ID retorna sucesso.
+    """
     response = await client.get(f"{products_url}{product_inserted.id}")
 
     content = response.json()
@@ -38,12 +44,15 @@ async def test_controller_get_should_return_success(
         "id": str(product_inserted.id),
         "name": "Iphone 14 Pro Max",
         "quantity": 10,
-        "price": "8.500",
+        "price": 8500.0,
         "status": True,
     }
 
 
 async def test_controller_get_should_return_not_found(client, products_url):
+    """
+    Testa se a obtenção de um produto com um ID inválido retorna não encontrado.
+    """
     response = await client.get(f"{products_url}4fd7cd35-a3a0-4c1f-a78d-d24aa81e7dca")
 
     assert response.status_code == status.HTTP_404_NOT_FOUND
@@ -54,6 +63,9 @@ async def test_controller_get_should_return_not_found(client, products_url):
 
 @pytest.mark.usefixtures("products_inserted")
 async def test_controller_query_should_return_success(client, products_url):
+    """
+    Testa se a consulta de produtos retorna uma lista de produtos.
+    """
     response = await client.get(products_url)
 
     assert response.status_code == status.HTTP_200_OK
@@ -64,8 +76,11 @@ async def test_controller_query_should_return_success(client, products_url):
 async def test_controller_patch_should_return_success(
     client, products_url, product_inserted
 ):
+    """
+    Testa se a atualização parcial de um produto retorna sucesso.
+    """
     response = await client.patch(
-        f"{products_url}{product_inserted.id}", json={"price": "7.500"}
+        f"{products_url}{product_inserted.id}", json={"price": 7500.0}
     )
 
     content = response.json()
@@ -78,7 +93,7 @@ async def test_controller_patch_should_return_success(
         "id": str(product_inserted.id),
         "name": "Iphone 14 Pro Max",
         "quantity": 10,
-        "price": "7.500",
+        "price": 7500.0,
         "status": True,
     }
 
@@ -86,12 +101,18 @@ async def test_controller_patch_should_return_success(
 async def test_controller_delete_should_return_no_content(
     client, products_url, product_inserted
 ):
+    """
+    Testa se a exclusão de um produto retorna sucesso sem conteúdo.
+    """
     response = await client.delete(f"{products_url}{product_inserted.id}")
 
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
 
 async def test_controller_delete_should_return_not_found(client, products_url):
+    """
+    Testa se a exclusão de um produto com um ID inválido retorna não encontrado.
+    """
     response = await client.delete(
         f"{products_url}4fd7cd35-a3a0-4c1f-a78d-d24aa81e7dca"
     )
